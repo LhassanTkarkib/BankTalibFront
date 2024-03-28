@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "BankTalibFront": {
+    "BankingPortal": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bank-talib-front",
+            "outputPath": "dist/banking-portal",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -27,7 +27,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -60,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "BankTalibFront:build:production"
+              "browserTarget": "BankingPortal:build:production"
             },
             "development": {
-              "browserTarget": "BankTalibFront:build:development"
+              "browserTarget": "BankingPortal:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "BankTalibFront:build"
+            "browserTarget": "BankingPortal:build"
           }
         },
         "test": {
@@ -96,6 +101,6 @@
     }
   },
   "cli": {
-    "analytics": "834aca90-48f0-4cf0-8358-9e3f9ef71902"
+    "analytics": "05437e56-1374-4077-b823-d6aef8bd3487"
   }
 }

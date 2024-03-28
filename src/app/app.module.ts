@@ -7,13 +7,22 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AngularToastifyModule} from "angular-toastify";
-import {ChartsModule} from "ng2-charts";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { UserprofilecardComponent } from './userprofilecard/userprofilecard.component';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { AccountdetailcardComponent } from './accountdetailcard/accountdetailcard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    HeaderComponent,
+    SidebarComponent,
+    UserprofilecardComponent,
+    TransactionHistoryComponent,
+    AccountdetailcardComponent
   ],
   imports: [
     RouterModule,
@@ -23,8 +32,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppRoutingModule,
     HttpClientModule,
     AngularToastifyModule,
-    ChartsModule
-
 
   ],
   providers: [],

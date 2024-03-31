@@ -15,6 +15,10 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { AccountdetailcardComponent } from './accountdetailcard/accountdetailcard.component';
 import { TransactionLinechartComponent } from './transaction-linechart/transaction-linechart.component';
 import {ChartsModule} from "ng2-charts";
+import { MonthlyTransactionChartComponent } from './monthly-transaction-chart/monthly-transaction-chart.component';
+import { DailyTransactionPiechartComponent } from './daily-transaction-piechart/daily-transaction-piechart.component';
+import { DonwloadtransactionsComponent } from './donwloadtransactions/donwloadtransactions.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,11 @@ import {ChartsModule} from "ng2-charts";
     UserprofilecardComponent,
     TransactionHistoryComponent,
     AccountdetailcardComponent,
-    TransactionLinechartComponent
+    TransactionLinechartComponent,
+    MonthlyTransactionChartComponent,
+    DailyTransactionPiechartComponent,
+    DonwloadtransactionsComponent,
+    DepositComponent
   ],
   imports: [
     RouterModule,

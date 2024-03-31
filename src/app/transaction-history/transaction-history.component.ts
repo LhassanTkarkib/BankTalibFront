@@ -1,6 +1,6 @@
 // transaction-history.component.ts
 
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import jwt_decode from "jwt-decode";
 
 
@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 })
 export class TransactionHistoryComponent implements OnInit {
   // private authtokenNameName = environment.tokenName;
-
+  @Input() data: any;
   transactionHistory: any[] = [];
   userAccountNumber: string | null = null;
   filteredTransactionHistory: any[] = [];
@@ -85,8 +85,6 @@ export class TransactionHistoryComponent implements OnInit {
       );
     }
   }
-
-  // Function to handle filter criteria changes
   onFilterCriteriaChange(event: any): void {
     this.filterCriteria = event.target.value;
     this.filterTransactions(); // Apply filtering based on the selected filter criteria

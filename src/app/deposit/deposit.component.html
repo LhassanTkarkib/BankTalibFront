@@ -2,7 +2,7 @@
   <div
     class="max-w-md w-full rounded-lg bg-white p-6 leading-5 text-slate-700 shadow-xl shadow-black/5 ring-1 ring-slate-700/10">
     <h2 class="text-3xl font-semibold mb-6 text-center">Deposit Money</h2>
-    <form [formGroup]="depositForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <form [formGroup]="depositForm"  class="space-y-4">
       <div>
         <label for="amount" class="block text-sm font-bold mb-2">Amount:</label>
         <input autocomplete="off" formControlName="amount" type="number" id="amount"

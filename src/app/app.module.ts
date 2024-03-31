@@ -19,6 +19,9 @@ import { MonthlyTransactionChartComponent } from './monthly-transaction-chart/mo
 import { DailyTransactionPiechartComponent } from './daily-transaction-piechart/daily-transaction-piechart.component';
 import { DonwloadtransactionsComponent } from './donwloadtransactions/donwloadtransactions.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { RegisterComponent } from './register/register.component';
+import { EnvironmentsModule } from './environments.module';
+import { EnvironmentModule } from '../environment/environment.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { DepositComponent } from './deposit/deposit.component';
     MonthlyTransactionChartComponent,
     DailyTransactionPiechartComponent,
     DonwloadtransactionsComponent,
-    DepositComponent
+    DepositComponent,
+    RegisterComponent
   ],
   imports: [
     RouterModule,
@@ -44,6 +48,8 @@ import { DepositComponent } from './deposit/deposit.component';
     HttpClientModule,
     AngularToastifyModule,
     ChartsModule,
+    EnvironmentsModule,
+    EnvironmentModule,
 
   ],
   providers: [],

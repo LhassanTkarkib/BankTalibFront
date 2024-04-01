@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-i
+import {environment} from "../../environment/environment";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -9,9 +12,9 @@ export class AuthService {
   private baseUrl = environment.apiUrl; // Replace with your actual API base URL
   private authtokenName = environment.tokenName
 
-  constructor() { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   registerUser(data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/users/register`, data);
+    return this.http.post<any>(`${this.baseUrl}/Auth/authenticate`, data);
   }
 }

@@ -20,8 +20,8 @@ import { DailyTransactionPiechartComponent } from './daily-transaction-piechart/
 import { DonwloadtransactionsComponent } from './donwloadtransactions/donwloadtransactions.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { RegisterComponent } from './register/register.component';
-import { EnvironmentsModule } from './environments.module';
-import { EnvironmentModule } from '../environment/environment.module';
+import {AuthService} from "./Services/auth.service";
+
 
 @NgModule({
   declarations: [
@@ -48,11 +48,9 @@ import { EnvironmentModule } from '../environment/environment.module';
     HttpClientModule,
     AngularToastifyModule,
     ChartsModule,
-    EnvironmentsModule,
-    EnvironmentModule,
 
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

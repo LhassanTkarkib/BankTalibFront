@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from 'angular-toastify';
 import { Observable } from 'rxjs';
-// import { ApiService } from 'src/app/services/api.service';
-// import { LoadermodelService } from 'src/app/services/loadermodel.service';
+import { ApiService } from 'src/app/services/api.service';
+import {LoadermodelService} from "../Services/loadermodel.service";
 
 @Component({
   selector: 'app-deposit',
@@ -16,10 +16,10 @@ export class DepositComponent {
 
   constructor(
     private fb: FormBuilder,
-    // private apiService: ApiService,
+    private apiService: ApiService,
     private _toastService: ToastService,
     private router: Router,
-    // private loader: LoadermodelService // Inject the LoaderService here
+    private loader: LoadermodelService // Inject the LoaderService here
   ) { }
 
   ngOnInit(): void {
@@ -33,31 +33,31 @@ export class DepositComponent {
     });
   }
 
-  // onSubmit(): void {
-  //   if (this.depositForm?.valid) {
-  //     const amount = this.depositForm.get('amount')?.value;
-  //     const pin = this.depositForm.get('pin')?.value;
-  //
-  //     if (amount !== null && pin !== null) {
-  //       this.loader.show('Depositing...'); // Show the loader before making the API call
-  //       this.apiServ ice.deposit(amount, pin).subscribe(
-  //         (response) => {
-  //           this.loader.hide(); // Hide the loader on successful deposit
-  //           // Handle successful deposit if needed
-  //           this._toastService.success(response.msg);
-  //           this.depositForm.reset();
-  //           console.log('Deposit successful!', response);
-  //         },
-  //         (error) => {
-  //           this.loader.hide(); // Hide the loader on deposit request failure
-  //           // Handle error if the deposit request fails
-  //           this._toastService.success(error.error || 'Deposit failed');
-  //           console.error('Deposit failed:', error);
-  //         }
-  //       );
-  //     }
-  //   }
-  //
-  //   this.initDepositForm();
-  // }
+  onSubmit(): void {
+    if (this.depositForm?.valid) {
+      const amount = this.depositForm.get('amount')?.value;
+      const pin = this.depositForm.get('pin')?.value;
+
+      if (amount !== null && pin !== null) {
+        this.loader.show('Depositing...'); // Show the loader before making the API call
+        this.apiService.deposit(amount, pin).subscribe(
+          (response) => {
+            this.loader.hide(); // Hide the loader on successful deposit
+            // Handle successful deposit if needed
+            this._toastService.success(response.msg);
+            this.depositForm.reset();
+            console.log('Deposit successful!', response);
+          },
+          (error) => {
+            this.loader.hide(); // Hide the loader on deposit request failure
+            // Handle error if the deposit request fails
+            this._toastService.success(error.error || 'Deposit failed');
+            console.error('Deposit failed:', error);
+          }
+        );
+      }
+    }
+
+    this.initDepositForm();
+  }
 }

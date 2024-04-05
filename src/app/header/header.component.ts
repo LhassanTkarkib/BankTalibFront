@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "../Services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -6,11 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-
-  constructor() { }
-
+  constructor(private authService: AuthService) { }
   isLoggedIn() {
-    return false;
+    return this.authService.isLoggedIn();
   }
 
   checkScreenSize() {
@@ -18,8 +17,6 @@ export class HeaderComponent {
   }
 
   logout(): void {
-
+    this.authService.logOutUser();
   }
-
-
 }

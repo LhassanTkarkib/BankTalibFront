@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../Services/auth.service";
 
@@ -22,9 +22,7 @@ function passwordMismatch(controlName: string, matchingControlName: string){
       matchingControl.setErrors({ passwordMismatch: true });
 
     } else {
-
       matchingControl.setErrors(null);
-
     }
 
   }
@@ -36,23 +34,21 @@ function passwordMismatch(controlName: string, matchingControlName: string){
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
   registerForm!: FormGroup;
   showRegistrationData = false;
   registrationData: any;
   print  =  console
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
-
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-        name: ['', Validators.required],
+      username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        address: ['', Validators.required],
-        phone_number: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+        firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
-        // Add other form controls if needed
       }, {
 
         validator: passwordMismatch('password', 'confirmPassword')

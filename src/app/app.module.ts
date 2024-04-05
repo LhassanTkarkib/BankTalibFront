@@ -7,20 +7,24 @@ import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {AngularToastifyModule} from "angular-toastify";
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { UserprofilecardComponent } from './userprofilecard/userprofilecard.component';
-import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
-import { AccountdetailcardComponent } from './accountdetailcard/accountdetailcard.component';
-import { TransactionLinechartComponent } from './transaction-linechart/transaction-linechart.component';
+
 import {ChartsModule} from "ng2-charts";
-import { MonthlyTransactionChartComponent } from './monthly-transaction-chart/monthly-transaction-chart.component';
-import { DailyTransactionPiechartComponent } from './daily-transaction-piechart/daily-transaction-piechart.component';
-import { DonwloadtransactionsComponent } from './donwloadtransactions/donwloadtransactions.component';
-import { DepositComponent } from './deposit/deposit.component';
-import { RegisterComponent } from './register/register.component';
+
 import {AuthService} from "./Services/auth.service";
+import {TransactionHistoryComponent} from "./transaction-history/transaction-history.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {HeaderComponent} from "./header/header.component";
+import {SidebarComponent} from "./sidebar/sidebar.component";
+import {UserprofilecardComponent} from "./userprofilecard/userprofilecard.component";
+import {AccountdetailcardComponent} from "./accountdetailcard/accountdetailcard.component";
+import {TransactionLinechartComponent} from "./transaction-linechart/transaction-linechart.component";
+import {MonthlyTransactionChartComponent} from "./monthly-transaction-chart/monthly-transaction-chart.component";
+import {DailyTransactionPiechartComponent} from "./daily-transaction-piechart/daily-transaction-piechart.component";
+import {DonwloadtransactionsComponent} from "./donwloadtransactions/donwloadtransactions.component";
+import {DepositComponent} from "./deposit/deposit.component";
+import {RegisterComponent} from "./register/register.component";
+import {LoginComponent} from "./login/login.component";
+
 
 
 @NgModule({
@@ -37,7 +41,8 @@ import {AuthService} from "./Services/auth.service";
     DailyTransactionPiechartComponent,
     DonwloadtransactionsComponent,
     DepositComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     RouterModule,

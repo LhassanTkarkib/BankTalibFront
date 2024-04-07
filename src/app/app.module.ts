@@ -24,6 +24,7 @@ import {DonwloadtransactionsComponent} from "./donwloadtransactions/donwloadtran
 import {DepositComponent} from "./deposit/deposit.component";
 import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -42,7 +43,8 @@ import {LoginComponent} from "./login/login.component";
     DonwloadtransactionsComponent,
     DepositComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     RouterModule,

@@ -43,12 +43,11 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/account/withdraw`, body);
   }
 
-  deposit(amount: string, pin: string): Observable<any> {
+  deposit(amount: string): Observable<any> {
     const body = {
       amount: amount,
-      pin: pin
     };
-    return this.http.post<any>(`${this.baseUrl}/account/deposit`, body);
+    return this.http.post<any>(`${this.baseUrl}/deposit`, body);
   }
 
   fundTransfer(amount: string, pin: string, targetAccountNumber: number): Observable<any> {

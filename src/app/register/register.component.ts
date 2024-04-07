@@ -3,24 +3,16 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../Services/auth.service";
 
 
-function passwordMismatch(controlName: string, matchingControlName: string){
+function passwordMismatch(controlName: string, matchingControlName: string) {
 
   return (formGroup: FormGroup) => {
-
     const control = formGroup.controls[controlName];
-
     const matchingControl = formGroup.controls[matchingControlName];
-
     if (matchingControl.errors && !matchingControl.errors.passwordMismatch) {
-
       return;
-
     }
-
     if (control.value !== matchingControl.value) {
-
-      matchingControl.setErrors({ passwordMismatch: true });
-
+      matchingControl.setErrors({passwordMismatch: true});
     } else {
       matchingControl.setErrors(null);
     }
@@ -34,19 +26,21 @@ function passwordMismatch(controlName: string, matchingControlName: string){
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   showRegistrationData = false;
   registrationData: any;
-  print  =  console
+  print = console
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+  }
+
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
+        username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+        lastname: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
       }, {
@@ -58,11 +52,10 @@ export class RegisterComponent implements OnInit{
   }
 
 
-
-
-
   // Convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
+  get f() {
+    return this.registerForm.controls;
+  }
 
   onSubmit() {
     if (this.registerForm.invalid) {

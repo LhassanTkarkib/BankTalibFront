@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   getUserDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/dashboard/user`);
+    return this.http.get<any>(`${this.baseUrl}/users/getUserByUserName/{userName}`);
   }
 
   updateUserProfile(payload: any): Observable<any> {

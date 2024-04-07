@@ -6,6 +6,7 @@ import {RegisterComponent} from "./register/register.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {LoginComponent} from "./login/login.component";
 import {DepositComponent} from "./deposit/deposit.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -13,6 +14,9 @@ const routes: Routes = [
   {path: '', component: DashboardComponent,canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'deposit', component: DepositComponent, canActivate: [AuthGuard]},
+  {path: 'withdraw', component: DepositComponent, canActivate: [AuthGuard]},
+  {path: 'transfer', component: DepositComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

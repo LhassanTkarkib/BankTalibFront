@@ -12,15 +12,18 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   showUpdateForm: boolean = false;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) { }
+  constructor(private authService: AuthService, private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.getUserProfileData();
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
-      address: ['', Validators.required],
-      phone_number: ['', Validators.required]
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+
     });
   }
 
@@ -28,7 +31,6 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserDetails().subscribe(
       (data) => {
         this.userProfile = data;
-
         this.profileForm.patchValue(data);
       },
       (error) => {

@@ -9,7 +9,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class ProfileComponent implements OnInit {
   userProfile: any;
-  profileForm!: FormGroup;
+  getForm!: FormGroup;
+  updateForm!: FormGroup;
   showUpdateForm: boolean = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder) {
@@ -17,12 +18,20 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserProfileData();
-    this.profileForm = this.fb.group({
+    this.getForm = this.fb.group({
       name: ['', Validators.required],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+    });
+
+    this.updateForm = this.fb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
 
     });
   }
@@ -31,7 +40,7 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserDetails().subscribe(
       (data) => {
         this.userProfile = data;
-        this.profileForm.patchValue(data);
+        this.getForm.patchValue(data);
       },
       (error) => {
         console.error('Error fetching user profile data:', error);
@@ -40,15 +49,15 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleUpdateForm(): void {
-    this.profileForm.patchValue(this.userProfile);
+    this.updateForm.patchValue(this.userProfile);
     this.showUpdateForm = !this.showUpdateForm;
   }
 
   updateProfile(): void {
 
-    console.log(this.profileForm.value);
+    console.log(this.updateForm.value);
 
-    this.authService.updateUserProfile(this.profileForm.value).subscribe(
+    this.authService.updateUserProfile(this.updateForm.value).subscribe(
       (data) => {
         this.userProfile = data;
         console.log('Profile updated successfully:', data);

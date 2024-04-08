@@ -5,28 +5,27 @@ import { Injectable } from '@angular/core';
 })
 export class JwtService {
   getToken(): string | null {
-    const token = sessionStorage.getItem('access_token');
-    console.log('Retrieved token:', token);
+    const token = localStorage.getItem('authToken');
     return token;
   }
 
   saveToken(token: string) {
-    sessionStorage.setItem('access_token', token);
+    localStorage.setItem('authToken', token);
   }
 
   destroyToken() {
-    sessionStorage.removeItem('access_token');
+    localStorage.removeItem('authToken');
   }
 
   getRefreshToken(): string | null {
-    return sessionStorage.getItem('refresh_token');
+    return localStorage.getItem('authToken');
   }
 
   saveRefreshToken(token: string) {
-    sessionStorage.setItem('refresh_token', token);
+    localStorage.setItem('authToken', token);
   }
 
   destroyRefreshToken() {
-    sessionStorage.removeItem('refresh_token');
+    localStorage.removeItem('authToken');
   }
 }

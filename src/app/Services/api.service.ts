@@ -1,7 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environment/environment";
+import jwt_decode from "jwt-decode";
+// @ts-ignore
+import { JwtService } from "./jwt.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,11 @@ import {environment} from "../../environment/environment";
 export class ApiService {
   private baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private jwt: JwtService,
+  ) {
+  }
 
   // Account API Endpoints
 
@@ -40,14 +47,26 @@ export class ApiService {
       amount: amount,
       pin: pin
     };
-    return this.http.post<any>(`${this.baseUrl}/account/withdraw`, body);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+
+    return this.http.post<any>(`${this.baseUrl}/transactions/withdraw/${decodedToken.accountNumber}`, body);
   }
 
   deposit(amount: string): Observable<any> {
     const body = {
       amount: amount,
     };
-    return this.http.post<any>(`${this.baseUrl}/deposit`, body);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+
+    return this.http.post<any>(`${this.baseUrl}/transactions/deposit/${decodedToken.accountNumber}`, body);
   }
 
   fundTransfer(amount: string, pin: string, targetAccountNumber: number): Observable<any> {
@@ -67,4 +86,3 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}/dashboard/account`);
   }
 }
-

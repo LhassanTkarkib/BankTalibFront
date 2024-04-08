@@ -1,20 +1,26 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../environment/environment";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {ToastService} from "angular-toastify";
 import {tap} from "rxjs/operators";
 import jwt_decode from "jwt-decode";
-
+import { JwtService } from "./jwt.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = environment.apiUrl; // Replace with your actual API base URL
-  private authtokenName = environment.tokenName
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private jwt: JwtService,
+    private toastService: ToastService
+  ) {
+  }
 
 
   registerUser(data: any): Observable<any> {
@@ -23,11 +29,21 @@ export class AuthService {
   }
 
   getUserDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/users/getUserByUserName/{userName}`);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.get<any>(`${this.baseUrl}/users/getUserByUserName/${decodedToken.preferred_username}`);
   }
 
   updateUserProfile(payload: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/users/update`, payload);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.put<any>(`${this.baseUrl}/Auth/update/${decodedToken.preferred_username}`, payload);
   }
 
   login(email: string, password: string): Observable<any> {
@@ -35,18 +51,15 @@ export class AuthService {
       email: email,
       password: password
     };
-
-    console.log(this.isLoggedIn());
-
-      return this.http.post<any>(`${this.baseUrl}/Auth/authenticate`, body);
+    return this.http.post<any>(`${this.baseUrl}/Auth/authenticate`, body);
   }
 
   isLoggedIn() {
-    const token = localStorage.getItem(this.authtokenName);
+    const token = this.jwt.getToken()
     if (token) {
       try {
         const decodedToken: any = jwt_decode(token);
-        if (decodedToken && decodedToken.exp && decodedToken.exp * 1000 > Date.now()) {
+        if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
           return true;
         }
       } catch (error) {
@@ -57,7 +70,8 @@ export class AuthService {
   }
 
   logOutUser() {
-    localStorage.removeItem(this.authtokenName)
+    this.jwt.destroyToken();
+    this.toastService.warn('Logged Out')
     this.router.navigate(['/']);
   }
 }

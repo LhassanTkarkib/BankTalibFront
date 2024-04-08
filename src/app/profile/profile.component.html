@@ -4,44 +4,35 @@
   <div *ngIf="!showUpdateForm" class="rounded-lg bg-white md:p-6 p-2 shadow-lg">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <label class="text-gray-600 font-semibold">Name:</label>
-        <span class="text-gray-800 block">{{ userProfile.name }}</span>
+        <label class="text-gray-600 font-semibold">Username:</label>
+        <span class="text-gray-800 block">{{ userProfile.username}}</span>
       </div>
 
       <div>
         <label class="text-gray-600 font-semibold">Email:</label>
-        <span class="text-gray-800 block">{{ userProfile.email }}</span>
+        <span class="text-gray-800 block">{{ userProfile.email}}</span>
       </div>
 
       <div>
-        <label class="text-gray-600 font-semibold">Address:</label>
-        <span class="text-gray-800 block">{{ userProfile.address }}</span>
+        <label class="text-gray-600 font-semibold">Firstname:</label>
+        <span class="text-gray-800 block">{{ userProfile.firstname}}</span>
       </div>
 
       <div>
-        <label class="text-gray-600 font-semibold">Phone Number:</label>
-        <span class="text-gray-800 block">{{ userProfile.phone_number }}</span>
+        <label class="text-gray-600 font-semibold">Lastname:</label>
+        <span class="text-gray-800 block">{{ userProfile.lastname }}</span>
       </div>
 
       <div>
         <label class="text-gray-600 font-semibold">Account Number:</label>
-        <span class="text-gray-800 block">{{ userProfile.accountNumber }}</span>
+        <span class="text-gray-800 block">{{ userProfile.account.accountNumber }}</span>
       </div>
 
       <div>
-        <label class="text-gray-600 font-semibold">Branch:</label>
-        <span class="text-gray-800 block">{{ userProfile.branch || 'N/A' }}</span>
+        <label class="text-gray-600 font-semibold">Balance:</label>
+        <span class="text-gray-800 block">{{ userProfile.account.balance || 'N/A' }}</span>
       </div>
 
-      <div>
-        <label class="text-gray-600 font-semibold">Account Type:</label>
-        <span class="text-gray-800 block">{{ userProfile.account_type || 'N/A' }}</span>
-      </div>
-
-      <div>
-        <label class="text-gray-600 font-semibold">IFSC Code:</label>
-        <span class="text-gray-800 block">{{ userProfile.ifsc_code || 'N/A' }}</span>
-      </div>
     </div>
 
     <button (click)="toggleUpdateForm()" type="button"
@@ -51,14 +42,19 @@
   </div>
 
   <div *ngIf="showUpdateForm" class="bg-white rounded-lg shadow-lg md:p-6 p-2 ">
-    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+    <form [formGroup]="updateForm" (ngSubmit)="updateProfile()">
       <!-- Name field -->
       <div class="mb-4">
-        <label class="text-gray-600 font-semibold">Name:</label>
-        <input formControlName="name" type="text" [readonly]="!showUpdateForm"
+        <label class="text-gray-600 font-semibold">Firstname:</label>
+        <input formControlName="firstname" type="text" [readonly]="!showUpdateForm"
                class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
       </div>
 
+      <div class="mb-4">
+        <label class="text-gray-600 font-semibold">Lastname:</label>
+        <input formControlName="lastname" type="text" [readonly]="!showUpdateForm"
+               class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
+      </div>
       <div class="mb-4">
         <label class="text-gray-600 font-semibold">Email:</label>
         <input formControlName="email" type="email" [readonly]="!showUpdateForm"
@@ -66,17 +62,10 @@
       </div>
 
       <div class="mb-4">
-        <label class="text-gray-600 font-semibold">Address:</label>
-        <input formControlName="address" type="text" [readonly]="!showUpdateForm"
+        <label class="text-gray-600 font-semibold">Password:</label>
+        <input formControlName="password" type="text" [readonly]="!showUpdateForm"
                class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
       </div>
-
-      <div class="mb-4">
-        <label class="text-gray-600 font-semibold">Phone Number:</label>
-        <input formControlName="phone_number" type="text" [readonly]="!showUpdateForm"
-               class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
-      </div>
-
 
       <div class="flex gap-2">
         <button *ngIf="showUpdateForm" type="submit"

@@ -6,6 +6,8 @@ import { ToastService } from 'angular-toastify';
 import { environment } from 'src/environment/environment';
 import {AuthService} from "../Services/auth.service";
 import {LoadermodelService} from "../Services/loadermodel.service";
+import jwt_decode from "jwt-decode";
+import {JwtService} from "../Services/jwt.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +23,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private _toastService: ToastService,
-    private loader : LoadermodelService
+    private loader : LoadermodelService,
+    private jwt : JwtService
   ) {}
 
   ngOnInit(): void {
@@ -45,8 +48,15 @@ export class LoginComponent implements OnInit {
           // Handle successful login here
           // Save the token from the response if needed
           console.log(response);
-          // this._toastService.success('Account LoggedIn');
+          this._toastService.success('Account LoggedIn');
           const token = response.access_token.access_token;
+
+          let decodedToken: any;
+          if (token) {
+            decodedToken = jwt_decode(token);
+          }
+          console.log(decodedToken.preferred_username);
+
           console.log(token);
           localStorage.setItem(this.authTokenName, token);
           this.loader.hide(); // Hide the loader on successful login

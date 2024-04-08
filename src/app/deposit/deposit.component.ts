@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from 'angular-toastify';
 import { Observable } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
 import {LoadermodelService} from "../Services/loadermodel.service";
+import {ApiService} from "../Services/api.service";
 
 @Component({
   selector: 'app-deposit',

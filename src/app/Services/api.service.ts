@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environment/environment";
 import jwt_decode from "jwt-decode";
 // @ts-ignore
-import { JwtService } from "./jwt.service";
+import {JwtService} from "./jwt.service";
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +42,10 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/account/pin/update`, body);
   }
 
-  withdraw(amount: string, pin: string): Observable<any> {
+  withdraw(amount: string): Observable<any> {
     const body = {
       amount: amount,
-      pin: pin
+
     };
     const token = this.jwt.getToken()
     let decodedToken: any;

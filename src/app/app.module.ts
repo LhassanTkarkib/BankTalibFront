@@ -25,6 +25,7 @@ import {DepositComponent} from "./deposit/deposit.component";
 import {RegisterComponent} from "./register/register.component";
 import {LoginComponent} from "./login/login.component";
 import { ProfileComponent } from './profile/profile.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
 
 
 
@@ -44,7 +45,8 @@ import { ProfileComponent } from './profile/profile.component';
     DepositComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    WithdrawComponent
   ],
   imports: [
     RouterModule,

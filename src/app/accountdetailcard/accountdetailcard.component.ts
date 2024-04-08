@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastService } from 'angular-toastify';
-import { ApiService } from 'src/app/services/api.service';
 import {AuthService} from "../Services/auth.service";
 
 @Component({

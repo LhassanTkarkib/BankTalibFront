@@ -9,6 +9,7 @@ import {DepositComponent} from "./deposit/deposit.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {WithdrawComponent} from "./withdraw/withdraw.component";
 import {FundTransferComponent} from "./fund-transfer/fund-transfer.component";
+import {TransactionHistoryComponent} from "./transaction-history/transaction-history.component";
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard]},
   {path: 'transfer', component: FundTransferComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path:'transacitonHistory',component:TransactionHistoryComponent,canActivate:[AuthGuard]}
   ]
 
 @NgModule({

@@ -83,7 +83,12 @@ export class ApiService {
   }
 
   getTransactions(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/account/transactions`);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.get<any>(`${this.baseUrl}/transactions/${decodedToken.accountNumber}`);
   }
 
   getAccountDetails(): Observable<any> {

@@ -1,7 +1,10 @@
 // transaction-history.component.ts
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import jwt_decode from "jwt-decode";
+import { environment } from 'src/environment/environment';
+import {ApiService} from "../Services/api.service";
+import {JwtService} from "../Services/jwt.service";
 
 
 @Component({
@@ -10,57 +13,58 @@ import jwt_decode from "jwt-decode";
   styleUrls: ['./transaction-history.component.css']
 })
 export class TransactionHistoryComponent implements OnInit {
-  // private authtokenNameName = environment.tokenName;
-  @Input() data: any;
+  private authtokenNameName = environment.tokenName;
+
   transactionHistory: any[] = [];
   userAccountNumber: string | null = null;
   filteredTransactionHistory: any[] = [];
   filterCriteria: string = ''; // Holds the filter criteria selected by the user
 
-  constructor() { }
+  constructor(
+    private apiService: ApiService,
+    private jwt:JwtService
+  ) { }
 
   ngOnInit(): void {
     this.loadTransactionHistory();
     console.log(this.transactionHistory);
-
   }
-
   loadTransactionHistory(): void {
-    // this.userAccountNumber = this.getAccountNumberFromToken(); // Get user's account number from the token
-    //
-    // this.apiService.getTransactions().subscribe(
-    //   (data) => {
-    //     this.transactionHistory = data; // Assign the received data to the transactionHistory property
-    //     this.filterTransactions(); // Apply initial filtering based on the current filter criteria
-    //     console.log(this.transactionHistory); // Now the data will be logged in the console
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching transaction history:', error);
-    //   }
-    // );
+    this.userAccountNumber = this.getAccountNumberFromToken();
+
+    this.apiService.getTransactions().subscribe(
+      (data) => {
+        this.transactionHistory = data;
+        this.filterTransactions();
+        console.log(this.transactionHistory); // Now the data will be logged in the console
+      },
+      (error) => {
+        console.error('Error fetching transaction history:', error);
+      }
+    );
   }
 
   getTransactionStatus(transaction: any): string {
-    if (transaction.transaction_type === 'Fund Transfer') {
-      if (transaction.sourceAccountNumber === this.userAccountNumber) {
+    if (transaction.typeTransaction === 'CASH_TRANSFER') {
+      if (transaction.senderAccountNumber === this.userAccountNumber) {
         return 'Transfer';
-      } else if (transaction.targetAccountNumber === this.userAccountNumber) {
+      } else if (transaction.receiverAccountNumber === this.userAccountNumber) {
         return 'Credited';
       }
-    } else if (transaction.transaction_type === 'Withdrawal') {
+    } else if (transaction.typeTransaction === 'CASH_WITHDRAWAL') {
       return 'Withdraw';
-    } else if (transaction.transaction_type === 'Deposit') {
+    } else if (transaction.typeTransaction === 'CASH_DEPOSIT') {
       return 'Deposited';
     }
-    return 'N/A'; // If no conditions are met, return 'N/A' for other types of transactions
+    return 'N/A';
   }
 
   getAccountNumberFromToken(): string | null {
-    // const authTokenName = localStorage.getItem(this.authtokenNameName);
-    // if (authTokenName) {
-    //   const decodedToken: any = jwt_decode(authTokenName);
-    //   return decodedToken.sub;
-    // }
+    const token = this.jwt.getToken();
+    if (token) {
+      const decodedToken: any = jwt_decode(token);
+      return decodedToken.accountNumber;
+    }
     return null;
   }
 
@@ -71,22 +75,23 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.filterCriteria === 'Deposit') {
       // Filter transactions for deposits
       this.filteredTransactionHistory = this.filteredTransactionHistory.filter(transaction =>
-        transaction.transaction_type === 'Deposit'
+        transaction.typeTransaction === 'CASH_DEPOSIT'
       );
     } else if (this.filterCriteria === 'Withdrawal') {
       // Filter transactions for withdrawals
       this.filteredTransactionHistory = this.filteredTransactionHistory.filter(transaction =>
-        transaction.transaction_type === 'Withdrawal'
+        transaction.typeTransaction === 'CASH_WITHDRAWAL'
       );
     } else if (this.filterCriteria === 'Transfer') {
       // Filter transactions for fund transfers
       this.filteredTransactionHistory = this.filteredTransactionHistory.filter(transaction =>
-        transaction.transaction_type === 'Fund Transfer'
+        transaction.typeTransaction === 'CASH_TRANSFER'
       );
     }
   }
+
   onFilterCriteriaChange(event: any): void {
     this.filterCriteria = event.target.value;
-    this.filterTransactions(); // Apply filtering based on the selected filter criteria
+    this.filterTransactions();
   }
 }

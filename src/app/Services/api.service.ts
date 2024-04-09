@@ -79,7 +79,7 @@ export class ApiService {
     if (token) {
       decodedToken = jwt_decode(token);
     }
-    return this.http.post<any>(`${this.baseUrl}/transaciotns/transfer/${decodedToken.accountNumber}`, body);
+    return this.http.post<any>(`${this.baseUrl}/transactions/transfer/${decodedToken.accountNumber}`, body);
   }
 
   getTransactions(): Observable<any> {

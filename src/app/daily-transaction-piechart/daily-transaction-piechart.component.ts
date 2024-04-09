@@ -37,7 +37,7 @@ export class DailyTransactionPiechartComponent {
 
       const selectedDateObject = new Date(this.selectedDate);
       const selectedDateTransactions = this.transactions.filter((transaction: any) => {
-        const transactionDate = new Date(transaction.transaction_date);
+        const transactionDate = new Date(transaction.dateTransaction);
 
         selectedDateObject.setHours(0, 0, 0, 0);
         transactionDate.setHours(0, 0, 0, 0);
@@ -47,7 +47,7 @@ export class DailyTransactionPiechartComponent {
       const typeData: { [type: string]: number } = {};
 
       selectedDateTransactions.forEach((transaction: any) => {
-        const type = transaction.transaction_type;
+        const type = transaction.typeTransaction;
         if (typeData[type]) {
           typeData[type] += transaction.amount;
         } else {
@@ -65,7 +65,7 @@ export class DailyTransactionPiechartComponent {
       const typeData: { [type: string]: number } = {};
 
       this.transactions.forEach((transaction: any) => {
-        const type = transaction.transaction_type;
+        const type = transaction.typeTransaction;
         if (typeData[type]) {
           typeData[type] += transaction.amount;
         } else {

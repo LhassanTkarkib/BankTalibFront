@@ -3,7 +3,7 @@
   <div class="flex gap-5 flex-col">
 
 
-    <app-transaction-linechart *ngIf="transactionHistory.length!=0" [transactions]="transactionHistory" />
+    <app-transaction-linechart *ngIf="transactionHistory.length!=0" [transactions]="transactionHistory"/>
 
     <div class="flex flex-col gap-5 md:flex-row space-y-4 md:space-y-0">
       <div class="w-full">
@@ -11,7 +11,7 @@
                                        [transactions]="transactionHistory"></app-monthly-transaction-chart>
       </div>
       <div class="w-full">
-        <app-daily-transaction-piechart *ngIf="transactionHistory.length!=0" [transactions]="transactionHistory" />
+        <app-daily-transaction-piechart *ngIf="transactionHistory.length!=0" [transactions]="transactionHistory"/>
       </div>
     </div>
 
@@ -24,21 +24,16 @@
         <select id="filterCriteria" formControlName="filterCriteria" (change)="onFilterCriteriaChange($event)"
                 class="block w-full p-3 bg-white border border-gray-300 rounded-md shadow focus:ring focus:ring-opacity-50 focus:ring-blue-500 focus:border-blue-500 sm:text-sm custom-select">
           <option [attr.selected]="true" value="" class="text-lg py-2">All Transactions</option>
-          <!-- Increase font size (text-lg) and add padding (py-2) -->
-          <option value="Deposit" class="text-lg py-2">Deposits</option> <!-- Increase font size and add padding -->
+          <option value="Deposit" class="text-lg py-2">Deposits</option>
           <option value="Withdrawal" class="text-lg py-2">Withdrawals</option>
-          <!-- Increase font size and add padding -->
           <option value="Transfer" class="text-lg py-2">Transfers/Credited</option>
-          <!-- Increase font size and add padding -->
         </select>
       </div>
 
-      <app-donwloadtransactions [data]="transactionHistory" />
+      <app-donwloadtransactions [data]="transactionHistory"/>
 
 
     </div>
-
-
 
 
     <div class="w-full border border-gray-200 mb-4">
@@ -66,10 +61,12 @@
             <td class="px-4 py-3 text-center">
                 <span
                   class="{{ getTransactionStatus(transaction) }}-color px-2 py-1 font-semibold leading-tight  text-sm rounded-full">{{
-                    getTransactionStatus(transaction) }}</span>
+                    getTransactionStatus(transaction)
+                  }}</span>
             </td>
             <td class="px-4 py-3 text-center">{{ transaction.senderAccountNumber }}</td>
-            <td class="px-4 py-3 text-center">{{ transaction.receiverAccountNumber ?? 'N/A' }}</td>          </tr>
+            <td class="px-4 py-3 text-center">{{ transaction.receiverAccountNumber ?? 'N/A' }}</td>
+          </tr>
           </tbody>
         </table>
       </div>

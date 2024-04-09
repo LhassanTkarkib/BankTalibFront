@@ -27,31 +27,26 @@ export class FundTransferComponent implements OnInit {
 
   initFundTransferForm(): void {
     this.fundTransferForm = this.fb.group({
-      amount: ['', [Validators.required, Validators.min(0)]], // Validate that amount is a positive number
-      pin: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      amount: ['', [Validators.required, Validators.min(0)]],
       targetAccountNumber: ['', [Validators.required]]
     });
   }
-
   onSubmit(): void {
     if (this.fundTransferForm?.valid) {
       const amount = this.fundTransferForm.get('amount')?.value;
-      const pin = this.fundTransferForm.get('pin')?.value;
       const targetAccountNumber = this.fundTransferForm.get('targetAccountNumber')?.value;
 
-      if (amount !== null && pin !== null && targetAccountNumber !== null) {
-        this.loader.show('Transferring funds...'); // Show the loader before making the API call
-        this.apiService.fundTransfer(amount, pin, targetAccountNumber).subscribe(
+      if (amount !== null && targetAccountNumber !== null) {
+        this.loader.show('Transferring funds...');
+        this.apiService.fundTransfer(amount, targetAccountNumber).subscribe(
           (response) => {
-            this.loader.hide(); // Hide the loader on successful fund transfer
-            // Handle successful fund transfer if needed
+            this.loader.hide();
             this.fundTransferForm.reset()
             this._toastService.success(response.msg);
             console.log('Fund transfer successful!', response);
           },
           (error) => {
-            this.loader.hide(); // Hide the loader on fund transfer request failure
-            // Handle error if the fund transfer request fails
+            this.loader.hide();
             this._toastService.error(error.error);
             console.error('Fund transfer failed:', error);
           }

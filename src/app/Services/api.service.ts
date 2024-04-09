@@ -69,13 +69,17 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/transactions/deposit/${decodedToken.accountNumber}`, body);
   }
 
-  fundTransfer(amount: string, pin: string, targetAccountNumber: number): Observable<any> {
+  fundTransfer(amount: string,targetAccountNumber: number ): Observable<any> {
     const body = {
       amount: amount,
-      pin: pin,
       targetAccountNumber: targetAccountNumber
     };
-    return this.http.post<any>(`${this.baseUrl}/account/fund-transfer`, body);
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.post<any>(`${this.baseUrl}/transaciotns/transfer/${decodedToken.accountNumber}`, body);
   }
 
   getTransactions(): Observable<any> {

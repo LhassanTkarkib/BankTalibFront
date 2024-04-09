@@ -19,23 +19,23 @@ export class MonthlyTransactionChartComponent {
     const monthlyData: { [monthYear: string]: { [type: string]: number } } = {};
 
     this.transactions.forEach((transaction: any) => {
-      const date = new Date(transaction.transaction_date);
+      const date = new Date(transaction.dateTransaction);
       const monthYear = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
       if (!monthlyData[monthYear]) {
         monthlyData[monthYear] = {};
       }
 
-      if (!monthlyData[monthYear][transaction.transaction_type]) {
-        monthlyData[monthYear][transaction.transaction_type] = transaction.amount;
+      if (!monthlyData[monthYear][transaction.typeTransaction]) {
+        monthlyData[monthYear][transaction.typeTransaction] = transaction.amount;
       } else {
-        monthlyData[monthYear][transaction.transaction_type] += transaction.amount;
+        monthlyData[monthYear][transaction.typeTransaction] += transaction.amount;
       }
     });
 
     // Extract months and corresponding total amounts for each type
     const sortedMonthYears = Object.keys(monthlyData).sort();
-    const transactionTypes = [...new Set(this.transactions.map((transaction: any) => transaction.transaction_type))];
+    const transactionTypes = [...new Set(this.transactions.map((transaction: any) => transaction.typeTransaction))];
 
     this.barChartLabels = sortedMonthYears;
     this.barChartData = transactionTypes.map((type) => ({

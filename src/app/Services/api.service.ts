@@ -18,29 +18,7 @@ export class ApiService {
   ) {
   }
 
-  // Account API Endpoints
 
-  checkPinCreated(): Observable<any> {
-
-    return this.http.get<any>(`${this.baseUrl}/account/pin/check`);
-  }
-
-  createPin(pin: string, password: string): Observable<any> {
-    const body = {
-      pin: pin,
-      password: password
-    };
-    return this.http.post<any>(`${this.baseUrl}/account/pin/create`, body);
-  }
-
-  updatePin(oldPin: string, newPin: string, password: string): Observable<any> {
-    const body = {
-      oldPin: oldPin,
-      newPin: newPin,
-      password: password
-    };
-    return this.http.post<any>(`${this.baseUrl}/account/pin/update`, body);
-  }
 
   withdraw(amount: string): Observable<any> {
     const body = {
@@ -91,7 +69,32 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}/transactions/${decodedToken.accountNumber}`);
   }
 
-  getAccountDetails(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/dashboard/account`);
+  createBill(data:any): Observable<any> {
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.post<any>(`${this.baseUrl}/bill/createBill/${decodedToken.accountNumber}`, data);
   }
+
+  getMyBills(): Observable<any> {
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.get<any>(`${this.baseUrl}/bill/getMyBills/${decodedToken.accountNumber}`);
+  }
+
+  payBill(billId:number ,amount:String): Observable<any> {
+    const data = {billId:billId,amount:amount}
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.post<any>(`${this.baseUrl}/bill/payBill/${billId}/${decodedToken.accountNumber}`,data);
+  }
+
 }

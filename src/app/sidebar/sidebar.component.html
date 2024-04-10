@@ -20,6 +20,13 @@
           </a>
         </li>
         <li class="mb-5">
+          <a routerLinkActive="active-link" routerLink="/profile"
+             class="sidebar-link inline-flex items-center gap-4 w-full text-normal font-semibold  text-gray-300 transition-colors duration-150">
+            <i class="fas fa-user"></i>
+            <span [ngClass]="{'hide-logo': !sidebarVisible}">User Profile</span>
+          </a>
+        </li>
+        <li class="mb-5">
           <a routerLinkActive="active-link" routerLink="/deposit"
              class="sidebar-link inline-flex items-center gap-4 w-full text-normal font-semibold  text-gray-300 transition-colors duration-150">
             <i class="fas fa-money-bill-wave"></i>
@@ -41,12 +48,13 @@
           </a>
         </li>
         <li class="mb-5">
-          <a routerLinkActive="active-link" routerLink="/profile"
+          <a routerLinkActive="active-link" routerLink="/Bills"
              class="sidebar-link inline-flex items-center gap-4 w-full text-normal font-semibold  text-gray-300 transition-colors duration-150">
-            <i class="fas fa-user"></i>
-            <span [ngClass]="{'hide-logo': !sidebarVisible}">User Profile</span>
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span [ngClass]="{'hide-logo': !sidebarVisible}">Bills</span>
           </a>
         </li>
+
         <li class="mb-5">
           <a routerLinkActive="active-link" routerLink="/transacitonHistory"
              class="sidebar-link inline-flex items-center gap-4 w-full text-normal font-semibold  text-gray-300 transition-colors duration-150">
@@ -56,6 +64,7 @@
 
           </a>
         </li>
+
       </ul>
     </nav>
   </div>

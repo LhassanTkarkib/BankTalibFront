@@ -27,6 +27,9 @@ import {LoginComponent} from "./login/login.component";
 import { ProfileComponent } from './profile/profile.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { FundTransferComponent } from './fund-transfer/fund-transfer.component';
+import { BillsBoardComponent } from './bills-board/bills-board.component';
+import { BillsTopayComponent } from './bills-topay/bills-topay.component';
+import { MybillsComponent } from './mybills/mybills.component';
 
 
 
@@ -48,7 +51,10 @@ import { FundTransferComponent } from './fund-transfer/fund-transfer.component';
     LoginComponent,
     ProfileComponent,
     WithdrawComponent,
-    FundTransferComponent
+    FundTransferComponent,
+    BillsBoardComponent,
+    BillsTopayComponent,
+    MybillsComponent
   ],
   imports: [
     RouterModule,

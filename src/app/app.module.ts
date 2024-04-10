@@ -31,10 +31,10 @@ import { BillsBoardComponent } from './bills-board/bills-board.component';
 import { BillsTopayComponent } from './bills-topay/bills-topay.component';
 import { MybillsComponent } from './mybills/mybills.component';
 import { BillsHistoryComponent } from './bills-history/bills-history.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatChipsModule} from "@angular/material/chips";
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
+
 
 
 
@@ -72,10 +72,10 @@ import {MatIconModule} from "@angular/material/icon";
     HttpClientModule,
     AngularToastifyModule,
     ChartsModule,
-    MatFormFieldModule,
-    MatChipsModule,
     MatLegacyChipsModule,
     MatIconModule,
+    MatFormFieldModule,
+
 
   ],
   providers: [AuthService],

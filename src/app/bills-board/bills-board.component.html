@@ -24,21 +24,22 @@
         <input formControlName="billName" type="text" [readonly]="!showBillsForm"
                class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
       </div>
-
       <div class="mb-4">
         <label class="text-gray-600 font-semibold">Amount:</label>
-        <input formControlName="amount" type="text" [readonly]="!showBillsForm"
+        <input formControlName="amount" type="number" pattern="^\d*(\.\d{0,2})?$" [readonly]="!showBillsForm"
                class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
       </div>
 
-      <div formArrayName="payers">
-        <mat-form-field class="example-chip-list">
+      <div formArrayName="payers" class="mb-4">
+        <mat-form-field class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
           <mat-chip-list #chipList aria-label="Payer selection">
-            <mat-chip *ngFor="let payer of payers.controls; index as i" [selectable]="true" [removable]="true" (removed)="removePayer(i)">
+            <mat-chip *ngFor="let payer of payers.controls; index as i" [selectable]="true" [removable]="true" (removed)="removePayer(i)"
+                      class="my-chip-class">
               {{ payer.value }}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="New payer..." matInput [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addPayer($event)" />
+            <input placeholder="New payer..." matInput [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   (matChipInputTokenEnd)="addPayer($event)" class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500"/>
           </mat-chip-list>
         </mat-form-field>
       </div>

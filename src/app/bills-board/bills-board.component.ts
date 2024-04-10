@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import {MatLegacyChipInputEvent} from "@angular/material/legacy-chips";
 
 @Component({
   selector: 'app-bills-board',
@@ -28,7 +29,7 @@ export class BillsBoardComponent implements OnInit {
     });
   }
 
-  addPayer(event: MatChipInputEvent) {
+  addPayer(event: MatLegacyChipInputEvent) {
     const input = event.input;
     const value = event.value;
 

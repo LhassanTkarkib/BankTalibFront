@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
 import {MatLegacyChipInputEvent} from "@angular/material/legacy-chips";
 
 @Component({
@@ -23,12 +22,23 @@ export class BillsBoardComponent implements OnInit {
     this.billsForm = this.fb.group({
       billName: ['', Validators.required],
       amount: ['', Validators.required],
-      dueDate: ['', Validators.required],
+      dueDate: ['', {
+        validators: [Validators.required, this.futureDateValidator()],
+        updateOn: 'blur'
+      }],
       paid: [false],
       payers: this.fb.array([])  // Add this line
     });
   }
 
+  futureDateValidator(): (control: AbstractControl) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const controlDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Remove time component of today's date
+      return controlDate < today ? { 'pastDate': {value: control.value} } : null;
+    };
+  }
   addPayer(event: MatLegacyChipInputEvent) {
     const input = event.input;
     const value = event.value;

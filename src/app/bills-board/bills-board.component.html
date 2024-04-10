@@ -38,10 +38,18 @@
               {{ payer.value }}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="New payer..." matInput [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            <input  type="number" placeholder="New Account Number..." matInput [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    (matChipInputTokenEnd)="addPayer($event)" class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500"/>
           </mat-chip-list>
         </mat-form-field>
+      </div>
+      <div class="mb-4">
+        <label class="text-gray-600 font-semibold">Due Date:</label>
+        <input formControlName="dueDate" type="date" [readonly]="!showBillsForm"
+               class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
+        <div *ngIf="billsForm.get('dueDate')?.errors?.pastDate" class="text-red-500">
+          The date must be in the future.
+        </div>
       </div>
 
       <div class="flex gap-2">

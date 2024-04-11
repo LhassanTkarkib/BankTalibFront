@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatLegacyChipInputEvent} from "@angular/material/legacy-chips";
+import {ApiService} from "../Services/api.service";
+import {ToastService} from "angular-toastify";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-bills-board',
@@ -15,7 +18,9 @@ export class BillsBoardComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-  ) {
+    private apiService: ApiService,
+    private _toastService: ToastService,
+) {
   }
 
   ngOnInit(): void {
@@ -26,8 +31,8 @@ export class BillsBoardComponent implements OnInit {
         validators: [Validators.required, this.futureDateValidator()],
         updateOn: 'blur'
       }],
-      paid: [false],
-      payers: this.fb.array([])  // Add this line
+      payementStatus: ['UNPAID', Validators.required],
+      payersAccountNumber: this.fb.array([])  // Add this line
     });
   }
 
@@ -58,19 +63,46 @@ export class BillsBoardComponent implements OnInit {
     this.payers.removeAt(index);
   }
 
+  removeAllPayers(): void {
+    this.payers.clear();
+  }
+
   get payers(): FormArray {
-    return this.billsForm.get('payers') as FormArray;
+    return this.billsForm.get('payersAccountNumber') as FormArray;
   }
 
   toggleBillsForm(): void {
     this.showBillsForm = !this.showBillsForm;
     if (!this.showBillsForm) {
       this.billsForm.reset();
+      this.removeAllPayers();
     }
   }
-
   onSubmit(): void {
-    // Handle form submission here
-    console.log(this.billsForm.value);
+    if (this.billsForm?.valid) {
+      const payers = this.billsForm.get('payersAccountNumber')?.value;
+      const billData = this.billsForm.value;
+
+      const requests = payers.map((payer: any) => {
+        // Clone the bill data and replace the payersAccountNumber with the current payer
+        const data = { ...billData, payersAccountNumber: payer };
+        return this.apiService.createBill(data);
+      });
+
+      forkJoin(requests).subscribe(
+        (responses: any[]) => {
+          // Handle successful bill creation if needed
+          responses.forEach((response: any, index: number) => {
+            this._toastService.success(`Bill for payer ${payers[index]} created successfully}`);
+            console.log(`Bill for payer ${payers[index]} created successfully!`, response);
+          });
+        },
+        (error) => {
+          // Handle error if the bill creation request fails
+          this._toastService.error(error.error || 'Bill creation failed');
+          console.error('Bill creation failed:', error);
+        }
+      );
+    }
   }
 }

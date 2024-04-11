@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class BillsTopayComponent {
 
+  //get bills to pay methode
+
+  //pay bills methode
+
 }

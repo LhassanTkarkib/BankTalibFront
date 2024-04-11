@@ -75,7 +75,7 @@ export class ApiService {
     if (token) {
       decodedToken = jwt_decode(token);
     }
-    return this.http.post<any>(`${this.baseUrl}/bill/createBill/${decodedToken.accountNumber}`, data);
+    return this.http.post<any>(`${this.baseUrl}/Bills/createBill/${decodedToken.accountNumber}`, data);
   }
 
   getMyBills(): Observable<any> {

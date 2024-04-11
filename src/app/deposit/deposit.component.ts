@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastService } from 'angular-toastify';
 import { Observable } from 'rxjs';
-import {LoadermodelService} from "../Services/loadermodel.service";
 import {ApiService} from "../Services/api.service";
 
 @Component({
@@ -19,7 +18,6 @@ export class DepositComponent implements OnInit{
     private apiService: ApiService,
     private _toastService: ToastService,
     private router: Router,
-    private loader: LoadermodelService // Inject the LoaderService here
   ) { }
 
   ngOnInit(): void {
@@ -37,17 +35,14 @@ export class DepositComponent implements OnInit{
       const amount = this.depositForm.get('amount')?.value;
 
       if (amount !== null) {
-        this.loader.show('Depositing...'); // Show the loader before making the API call
         this.apiService.deposit(amount).subscribe(
           (response) => {
-            this.loader.hide(); // Hide the loader on successful deposit
             // Handle successful deposit if needed
             this._toastService.success(response.msg);
             this.depositForm.reset();
             console.log('Deposit successful!', response);
           },
           (error) => {
-            this.loader.hide(); // Hide the loader on deposit request failure
             // Handle error if the deposit request fails
             this._toastService.success(error.error || 'Deposit failed');
             console.error('Deposit failed:', error);

@@ -30,7 +30,7 @@
                class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
       </div>
 
-      <div formArrayName="payers" class="mb-4">
+      <div formArrayName="payersAccountNumber" class="mb-4">
         <mat-form-field class="border border-gray-300 rounded p-2 w-full focus:outline-none focus:border-blue-500">
           <mat-chip-list #chipList aria-label="Payer selection">
             <mat-chip *ngFor="let payer of payers.controls; index as i" [selectable]="true" [removable]="true" (removed)="removePayer(i)"

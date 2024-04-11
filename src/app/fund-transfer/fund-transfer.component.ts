@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadermodelService} from "../Services/loadermodel.service";
 import {Router} from "@angular/router";
 import {ToastService} from "angular-toastify";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -18,7 +17,6 @@ export class FundTransferComponent implements OnInit {
     private apiService: ApiService,
     private _toastService: ToastService,
     private router: Router,
-    private loader: LoadermodelService
   ) { }
 
   ngOnInit(): void {
@@ -37,16 +35,13 @@ export class FundTransferComponent implements OnInit {
       const targetAccountNumber = this.fundTransferForm.get('targetAccountNumber')?.value;
 
       if (amount !== null && targetAccountNumber !== null) {
-        this.loader.show('Transferring funds...');
         this.apiService.fundTransfer(amount, targetAccountNumber).subscribe(
           (response) => {
-            this.loader.hide();
             this.fundTransferForm.reset()
             this._toastService.success(response.msg);
             console.log('Fund transfer successful!', response);
           },
           (error) => {
-            this.loader.hide();
             this._toastService.error(error.error);
             console.error('Fund transfer failed:', error);
           }

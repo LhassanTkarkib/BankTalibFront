@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadermodelService} from "../Services/loadermodel.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ApiService} from "../Services/api.service";
 import {ToastService} from "angular-toastify";
@@ -18,7 +17,6 @@ export class WithdrawComponent  implements OnInit {
     private apiService: ApiService,
     private _toastService: ToastService,
     private router: Router,
-    private loader: LoadermodelService // Inject the LoaderService here
   ) { }
 
   ngOnInit(): void {
@@ -35,16 +33,13 @@ export class WithdrawComponent  implements OnInit {
     if (this.withdrawForm.valid) {
       const amount = this.withdrawForm.get('amount')?.value;
 
-      this.loader.show('Withdrawing...'); // Show the loader before making the API call
       this.apiService.withdraw(amount).subscribe(
         (response) => {
-          this.loader.hide(); // Hide the loader on successful withdrawal
           this._toastService.success(response.msg);
           this.withdrawForm.reset()
           console.log('Withdrawal successful!', response);
         },
         (error) => {
-          this.loader.hide(); // Hide the loader on withdrawal request failure
           this._toastService.error(error.error);
           console.error('Withdrawal failed:', error);
         }

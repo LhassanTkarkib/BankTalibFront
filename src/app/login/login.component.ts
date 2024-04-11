@@ -5,7 +5,6 @@ import { ToastService } from 'angular-toastify';
 
 import { environment } from 'src/environment/environment';
 import {AuthService} from "../Services/auth.service";
-import {LoadermodelService} from "../Services/loadermodel.service";
 import jwt_decode from "jwt-decode";
 import {JwtService} from "../Services/jwt.service";
 @Component({
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private _toastService: ToastService,
-    private loader : LoadermodelService,
     private jwt : JwtService
   ) {}
 
@@ -42,7 +40,6 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.loader.show("Logging...");
       this.authService.login(email, password).subscribe(
         (response: any) => {
           // Handle successful login here
@@ -59,7 +56,6 @@ export class LoginComponent implements OnInit {
 
           console.log(token);
           localStorage.setItem(this.authTokenName, token);
-          this.loader.hide(); // Hide the loader on successful login
           this.router.navigate(['/dashboard']);
           // Redirect to the desired page or perform any other action
         },
@@ -67,7 +63,6 @@ export class LoginComponent implements OnInit {
           // Handle login failure here
           this._toastService.error('Invalid Credentials');
           console.error('Login error:', error);
-          this.loader.hide(); // Hide the loader on login error
         }
       );
     }

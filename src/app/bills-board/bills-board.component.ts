@@ -5,6 +5,7 @@ import {MatLegacyChipInputEvent} from "@angular/material/legacy-chips";
 import {ApiService} from "../Services/api.service";
 import {ToastService} from "angular-toastify";
 import {forkJoin} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-bills-board',
@@ -20,6 +21,8 @@ export class BillsBoardComponent implements OnInit {
     private fb: FormBuilder,
     private apiService: ApiService,
     private _toastService: ToastService,
+    private router: Router
+
 ) {
   }
 
@@ -84,21 +87,21 @@ export class BillsBoardComponent implements OnInit {
       const billData = this.billsForm.value;
 
       const requests = payers.map((payer: any) => {
-        // Clone the bill data and replace the payersAccountNumber with the current payer
         const data = { ...billData, payersAccountNumber: payer };
         return this.apiService.createBill(data);
       });
 
       forkJoin(requests).subscribe(
         (responses: any[]) => {
-          // Handle successful bill creation if needed
           responses.forEach((response: any, index: number) => {
             this._toastService.success(`Bill for payer ${payers[index]} created successfully}`);
             console.log(`Bill for payer ${payers[index]} created successfully!`, response);
           });
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/dashboard']);
+          });
         },
         (error) => {
-          // Handle error if the bill creation request fails
           this._toastService.error(error.error || 'Bill creation failed');
           console.error('Bill creation failed:', error);
         }

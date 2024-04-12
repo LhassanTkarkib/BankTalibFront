@@ -24,7 +24,6 @@ const routes: Routes = [
   {path:'transacitonHistory',component:TransactionHistoryComponent,canActivate:[AuthGuard]},
   {path:'Bills',component:BillsBoardComponent,canActivate:[AuthGuard]}
   ]
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

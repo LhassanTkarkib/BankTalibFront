@@ -97,9 +97,13 @@ export class TransactionLinechartComponent {
 
 
     // Separate filtered transactions by type
+    const billtransaction = filteredTransactions.filter((transaction: any) => transaction.typeTransaction === 'BILL_PAYMENT');
     const depositTransactions = filteredTransactions.filter((transaction: any) => transaction.typeTransaction === 'CASH_DEPOSIT');
     const fundTransferTransactions = filteredTransactions.filter((transaction: any) => transaction.typeTransaction === 'CASH_TRANSFER');
     const withdrawalTransactions = filteredTransactions.filter((transaction: any) => transaction.typeTransaction === 'CASH_WITHDRAWAL');
+
+
+    const BillPayementAmount = billtransaction.map((transaction: any) => transaction.amount);
 
     // Prepare data for each line
     const depositDates = depositTransactions.map((transaction: any) => new Date(transaction.dateTransaction));
@@ -112,6 +116,7 @@ export class TransactionLinechartComponent {
     const withdrawalAmounts = withdrawalTransactions.map((transaction: any) => transaction.amount);
 
     this.lineChartData = [
+      { data: BillPayementAmount, label: 'BillPayement' },
       { data: depositAmounts, label: 'Deposit' },
       { data: fundTransferAmounts, label: 'Fund Transfer' },
       { data: withdrawalAmounts, label: 'Withdrawal' },
@@ -126,9 +131,7 @@ export class TransactionLinechartComponent {
     if (this.selectedYear == "") {
       this.selectedMonth = "";
     }
-
     console.log(this.selectedMonth, this.selectedYear);
-
     this.prepareChartData();
   }
 }

@@ -94,14 +94,14 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}/Bills/getBillByAccountNumberInvolved/${decodedToken.accountNumber}`);
   }
 
-  payBill(billId:number ,amount:String): Observable<any> {
-    const data = {billId:billId,amount:amount}
+  payBill(bill:any): Observable<any> {
+    const billId=bill.idBill;
     const token = this.jwt.getToken()
     let decodedToken: any;
     if (token) {
       decodedToken = jwt_decode(token);
     }
-    return this.http.post<any>(`${this.baseUrl}/Bills/payBill/${billId}/${decodedToken.accountNumber}`,data);
+    return this.http.put<any>(`${this.baseUrl}/Bills/payBill/${billId}/${decodedToken.accountNumber}`,bill);
   }
 
 

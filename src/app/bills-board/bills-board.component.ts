@@ -101,16 +101,17 @@ export class BillsBoardComponent implements OnInit {
     return this.billsForm.get('payersAccountNumber') as FormArray;
   }
 
-  onSubmit()
-    :
-    void {
-    if (this.billsForm?.valid
-    ) {
+  onSubmit(): void {
+    if (this.billsForm?.valid) {
       const payers = this.billsForm.get('payersAccountNumber')?.value;
       const billData = this.billsForm.value;
 
+      // Calculate the amount per payer
+      const amountPerPayer = billData.amount / payers.length;
+
       const requests = payers.map((payer: any) => {
-        const data = {...billData, payersAccountNumber: payer};
+        // Assign the amount per payer to each payer
+        const data = {...billData, amount: amountPerPayer, payersAccountNumber: payer};
         return this.apiService.createBill(data);
       });
 
@@ -165,7 +166,17 @@ export class BillsBoardComponent implements OnInit {
     return 'N/A';
   }
 
-  onPayClick() {
+  onPayClick(bill: any) {
+    this.apiService.payBill(bill).subscribe(
+      (response) => {
+        this._toastService.success('Bill paid successfully');
+        this.loadMyBillsToPay();
+      },
+      (error) => {
+        this._toastService.error(error.error || 'Bill payment failed');
+        console.error('Bill payment failed:', error);
+      }
+    );
 
   }
 }

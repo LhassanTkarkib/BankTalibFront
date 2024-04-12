@@ -6,6 +6,13 @@
   background-color: #fed7d7;
   /* Light red background */
 }
+::ng-deep .Bill-Payement-color {
+
+  color: #e5b03e !important;
+  /* Red */
+  background-color: #fed7d7;
+  /* Light red background */
+}
 
 ::ng-deep .Transfer-color {
 

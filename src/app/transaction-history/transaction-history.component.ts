@@ -55,6 +55,8 @@ export class TransactionHistoryComponent implements OnInit {
       return 'Withdraw';
     } else if (transaction.typeTransaction === 'CASH_DEPOSIT') {
       return 'Deposited';
+    } else if(transaction.typeTransaction === 'BILL_PAYMENT') {
+      return 'Bill-Payement';
     }
     return 'N/A';
   }

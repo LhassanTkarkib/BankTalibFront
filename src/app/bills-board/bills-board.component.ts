@@ -15,18 +15,20 @@ import {Router} from "@angular/router";
 export class BillsBoardComponent implements OnInit {
   billsForm!: FormGroup;
   showBillsForm: boolean = false;
+  showMyBills: boolean = false;
+  showBillsToPay: boolean = false;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-
+  Mybills: any[] = [];
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private _toastService: ToastService,
     private router: Router
-
-) {
+  ) {
   }
 
   ngOnInit(): void {
+    this.loadMyBills();
     this.billsForm = this.fb.group({
       billName: ['', Validators.required],
       amount: ['', Validators.required],
@@ -39,14 +41,39 @@ export class BillsBoardComponent implements OnInit {
     });
   }
 
+  toggleBillsForm(): void {
+    this.showBillsForm = !this.showBillsForm;
+    this.showBillsToPay = false;
+    this.showMyBills = false;
+    if (!this.showBillsForm) {
+      this.billsForm.reset();
+      this.removeAllPayers();
+
+    }
+  }
+
+  toggleMyBills(): void {
+    this.showMyBills = !this.showMyBills;
+    this.showBillsToPay = false;
+    this.showBillsForm = false;
+  }
+
+  toggleBillsToPay(): void {
+    this.showBillsToPay = !this.showBillsToPay;
+    this.showMyBills = false;
+    this.showBillsForm = false;
+
+  }
+
   futureDateValidator(): (control: AbstractControl) => ValidationErrors | null {
     return (control: AbstractControl): ValidationErrors | null => {
       const controlDate = new Date(control.value);
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Remove time component of today's date
-      return controlDate < today ? { 'pastDate': {value: control.value} } : null;
+      today.setHours(0, 0, 0, 0);
+      return controlDate < today ? {'pastDate': {value: control.value}} : null;
     };
   }
+
   addPayer(event: MatLegacyChipInputEvent) {
     const input = event.input;
     const value = event.value;
@@ -74,20 +101,16 @@ export class BillsBoardComponent implements OnInit {
     return this.billsForm.get('payersAccountNumber') as FormArray;
   }
 
-  toggleBillsForm(): void {
-    this.showBillsForm = !this.showBillsForm;
-    if (!this.showBillsForm) {
-      this.billsForm.reset();
-      this.removeAllPayers();
-    }
-  }
-  onSubmit(): void {
-    if (this.billsForm?.valid) {
+  onSubmit()
+    :
+    void {
+    if (this.billsForm?.valid
+    ) {
       const payers = this.billsForm.get('payersAccountNumber')?.value;
       const billData = this.billsForm.value;
 
       const requests = payers.map((payer: any) => {
-        const data = { ...billData, payersAccountNumber: payer };
+        const data = {...billData, payersAccountNumber: payer};
         return this.apiService.createBill(data);
       });
 
@@ -97,7 +120,7 @@ export class BillsBoardComponent implements OnInit {
             this._toastService.success(`Bill for payer ${payers[index]} created successfully}`);
             console.log(`Bill for payer ${payers[index]} created successfully!`, response);
           });
-          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
             this.router.navigate(['/dashboard']);
           });
         },
@@ -107,5 +130,42 @@ export class BillsBoardComponent implements OnInit {
         }
       );
     }
+  }
+
+  loadMyBills(): void {
+    this.toggleMyBills();
+    this.apiService.getMyBills().subscribe(
+      (bills) => {
+        this.Mybills = bills;
+      },
+      (error) => {
+        console.error('Error loading bills:', error);
+      }
+    );
+  }
+
+  loadMyBillsToPay(): void {
+    this.toggleBillsToPay();
+    this.apiService.getBillsToPay().subscribe(
+      (bills) => {
+        this.Mybills = bills;
+      },
+      (error) => {
+        console.error('Error loading bills:', error);
+      }
+    );
+  }
+
+  getBillsStatus(bills: any): string {
+    if (bills.payementStatus === 'UNPAID') {
+      return 'NOT-PAID';
+    } else if (bills.payementStatus === 'PAID') {
+      return 'PAID';
+    }
+    return 'N/A';
+  }
+
+  onPayClick() {
+
   }
 }

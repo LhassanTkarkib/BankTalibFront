@@ -28,9 +28,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { FundTransferComponent } from './fund-transfer/fund-transfer.component';
 import { BillsBoardComponent } from './bills-board/bills-board.component';
-import { BillsTopayComponent } from './bills-topay/bills-topay.component';
-import { MybillsComponent } from './mybills/mybills.component';
-import { BillsHistoryComponent } from './bills-history/bills-history.component';
+
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -59,9 +57,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     WithdrawComponent,
     FundTransferComponent,
     BillsBoardComponent,
-    BillsTopayComponent,
-    MybillsComponent,
-    BillsHistoryComponent
+
   ],
   imports: [
     RouterModule,

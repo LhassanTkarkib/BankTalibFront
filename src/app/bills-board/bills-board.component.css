@@ -1,3 +1,37 @@
+::ng-deep .NOT-PAID-color {
+
+
+  color: #ffffff !important;
+  /* Red */
+  background-color: rgba(255, 11, 11, 0.87);
+  /* Light red background */
+}
+
+::ng-deep .PAID-color {
+
+
+  color: #ffffff !important;
+  /* Blue */
+  background-color: #14ff04;
+  /* Light blue background */
+}
+
+/* For the custom select element */
+.custom-select select {
+  padding: 0.75rem 2rem;
+  /* Customize the padding as needed */
+  font-size: 16px;
+  /* Increase the font size as needed */
+}
+
+/* For the options within the custom select */
+.custom-select option {
+  padding: 0.5rem;
+  /* Customize the padding for options as needed */
+  font-size: 16px;
+  /* Increase the font size for options as needed */
+}
+
 :host {
 
   display: flex;
@@ -9,4 +43,6 @@
   display: flex;
   flex-direction: column;
 }
-
+.button.mt-6.font-semibold.cursor-pointer.bg-blue-600.text-white.py-2.px-4.rounded-lg.hover\:bg-blue-700.transition.duration-300.ease-in-out {
+  margin-top: 0px;
+}

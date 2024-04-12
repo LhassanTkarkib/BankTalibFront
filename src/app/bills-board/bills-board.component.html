@@ -2,19 +2,26 @@
   <h1 class="text-2xl font-bold text-indigo-700 mb-6">{{ showBillsForm ? 'Create' : '' }} Bills</h1>
 
   <div class="container bg-white p-4 rounded-lg shadow-lg flex">
+
     <button (click)="toggleBillsForm()" type="button"
             class="mr-2 font-semibold cursor-pointer text-indigo-900 bg-blue-100 py-2 px-4 rounded-lg hover:bg-blue-200 transition duration-300 ease-in-out">
       Create Bill
     </button>
-    <button (click)="toggleBillsForm()" type="button"
+
+    <button (click)="loadMyBills()" type="button"
             class="mr-2 font-semibold cursor-pointer text-indigo-900 bg-blue-100 py-2 px-4 rounded-lg hover:bg-blue-200 transition duration-300 ease-in-out">
       Show my bills
     </button>
-    <button (click)="toggleBillsForm()" type="button"
+
+    <button (click)="loadMyBillsToPay()" type="button"
             class="font-semibold cursor-pointer text-indigo-900 bg-blue-100 py-2 px-4 rounded-lg hover:bg-blue-200 transition duration-300 ease-in-out">
       Bills to pay
     </button>
+
   </div>
+
+
+
 
   <div *ngIf="showBillsForm" class="bg-white rounded-lg shadow-lg md:p-6 p-2 ">
     <form [formGroup]="billsForm" (ngSubmit)="onSubmit()">
@@ -66,4 +73,122 @@
       </div>
     </form>
   </div>
+
+
+  <div *ngIf="showMyBills" class="shadow my-4 shadow p-2 bg-white">
+    <div  class="w-full border border-gray-200 mb-4">
+      <div class="w-full overflow-x-auto" *ngIf="!(Mybills.length === 0)">
+        <table class="w-full rounded-lg">
+          <thead>
+          <tr
+            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 bg-gray-50">
+            <th class="px-4 py-3">Bill ID</th>
+            <th class="px-4 py-3">Bill Name</th>
+
+            <th class="px-4 py-3">Amount</th>
+            <th class="px-4 py-3">Due Date</th>
+            <th class="px-4 py-3">Payement Status</th>
+            <th class="px-4 py-3">Payer Account Number</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-300">
+          <tr *ngFor="let bill of Mybills" class="text-gray-900">
+            <td class="px-4 py-3 text-center">
+              {{ bill.idBill }}
+            </td>
+            <td class="px-4 py-3 font-semibold">
+              {{ bill.billName }}
+            </td>
+            <td class="px-4 py-3 font-semibold">
+            {{ bill.amount | currency:'EUR':'symbol' }}
+          </td>
+            <td class="px-4 py-3 text-center">
+              {{ bill.dueDate | date:'yyyy-MM-dd' }}
+            </td>
+            <td class="px-4 py-3 text-center">
+                <span
+                  class="{{ getBillsStatus(bill) }}-color px-2 py-1 font-semibold leading-tight  text-sm rounded-full">
+                  {{
+                    getBillsStatus(bill)
+                  }}
+                </span>
+            </td>
+            <td class="px-4 py-3 text-center">
+              {{ bill.payersAccountNumber }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="showBillsToPay" class="shadow my-4 shadow p-2 bg-white">
+    <div  class="w-full border border-gray-200 mb-4">
+      <div class="w-full overflow-x-auto" *ngIf="!(Mybills.length === 0)">
+        <table class="w-full rounded-lg">
+          <thead>
+          <tr
+            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 bg-gray-50">
+            <th class="px-4 py-3">Bill ID</th>
+            <th class="px-4 py-3">Bill Name</th>
+
+            <th class="px-4 py-3">Amount</th>
+            <th class="px-4 py-3">Due Date</th>
+            <th class="px-4 py-3">Payement Status</th>
+            <th class="px-4 py-3">Bill Owner</th>
+            <th class="px-4 py-3">Pay</th>
+
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-300">
+          <tr *ngFor="let bill of Mybills" class="text-gray-900">
+            <td class="px-4 py-3 text-center">
+              {{ bill.idBill }}
+            </td>
+            <td class="px-4 py-3 font-semibold">
+              {{ bill.billName }}
+            </td>
+            <td class="px-4 py-3 font-semibold">
+              {{ bill.amount | currency:'EUR':'symbol' }}
+            </td>
+            <td class="px-4 py-3 text-center">
+              {{ bill.dueDate | date:'yyyy-MM-dd' }}
+            </td>
+            <td class="px-4 py-3 text-center">
+                <span
+                  class="{{ getBillsStatus(bill) }}-color px-2 py-1 font-semibold leading-tight  text-sm rounded-full">
+                  {{
+                    getBillsStatus(bill)
+                  }}
+                </span>
+            </td>
+            <td class="px-4 py-3 text-center">
+              {{ bill.accountNumberInitiated }}
+            </td>
+            <td class="px-4 py-3 text-center">
+              <button (click)="onPayClick()" type="button"
+                      class="mt-6 font-semibold cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">
+                Pay
+              </button>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div *ngIf="Mybills.length === 0" class="text-center mt-4">
+    <div *ngIf="showBillsForm!==true">
+      <p class="text-3xl font-semibold text-gray-900">No Bills History</p>
+    </div>
+  </div>
+
+
 </div>

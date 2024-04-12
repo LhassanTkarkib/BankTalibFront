@@ -18,8 +18,6 @@ export class ApiService {
   ) {
   }
 
-
-
   withdraw(amount: string): Observable<any> {
     const body = {
       amount: amount,
@@ -84,7 +82,16 @@ export class ApiService {
     if (token) {
       decodedToken = jwt_decode(token);
     }
-    return this.http.get<any>(`${this.baseUrl}/bill/getMyBills/${decodedToken.accountNumber}`);
+    return this.http.get<any>(`${this.baseUrl}/Bills/getBillByAccountNumberInitiated/${decodedToken.accountNumber}`);
+  }
+
+  getBillsToPay(): Observable<any> {
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.get<any>(`${this.baseUrl}/Bills/getBillByAccountNumberInvolved/${decodedToken.accountNumber}`);
   }
 
   payBill(billId:number ,amount:String): Observable<any> {
@@ -94,7 +101,8 @@ export class ApiService {
     if (token) {
       decodedToken = jwt_decode(token);
     }
-    return this.http.post<any>(`${this.baseUrl}/bill/payBill/${billId}/${decodedToken.accountNumber}`,data);
+    return this.http.post<any>(`${this.baseUrl}/Bills/payBill/${billId}/${decodedToken.accountNumber}`,data);
   }
+
 
 }

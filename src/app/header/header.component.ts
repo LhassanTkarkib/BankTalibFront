@@ -7,6 +7,9 @@ import {AuthService} from "../Services/auth.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+
+  showNotifications = false;
+
   constructor(private authService: AuthService) { }
   isLoggedIn() {
     return this.authService.isLoggedIn();
@@ -16,6 +19,9 @@ export class HeaderComponent {
     return window.innerWidth < 768;
   }
 
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
+  }
   logout(): void {
     this.authService.logOutUser();
   }

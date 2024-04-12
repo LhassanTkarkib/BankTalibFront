@@ -32,6 +32,7 @@ import { BillsBoardComponent } from './bills-board/bills-board.component';
 import {MatLegacyChipsModule} from "@angular/material/legacy-chips";
 import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 
@@ -57,6 +58,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     WithdrawComponent,
     FundTransferComponent,
     BillsBoardComponent,
+    NotificationsComponent,
 
   ],
   imports: [

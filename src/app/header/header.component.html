@@ -15,26 +15,39 @@
         <i class="fas fa-user-plus mr-1"></i> Create Account
       </a>
 
-
-
-      <div class="relative inline-block">
-        <button *ngIf="isLoggedIn()"
-                class="smallscreen text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm bg-blue-500"
-                (click)="toggleNotifications()">
+      <div class="relative inline-block" *ngIf="isLoggedIn()">
+        <button
+          class="smallscreen text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm bg-blue-500"
+          (click)="getNotifications()">
           <i class="fas fa-bell"></i>
         </button>
         <!-- Notification Bubble -->
         <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-    3
-  </span>
+          {{ notificationCount }}
+        </span>
         <!-- Notifications Dropdown -->
         <div *ngIf="showNotifications" class="absolute right-0 mt-2 w-80 bg-white border border-gray-300 divide-y divide-gray-100 rounded-md shadow-lg">
-          <div class="px-4 py-3">
-            <p class="text-sm leading-5">Notifications</p>
+          <div *ngIf="notificationCount === 0" class="px-4 py-3">
+            <p class="text-sm leading-5">No new notifications</p>
           </div>
 
-          <div class="px-4 py-3">
-            <p class="text-sm leading-5">No new notifications</p>
+          <div *ngIf="notificationCount > 0" class="w-full overflow-x-auto notifications-container">
+            <table class="w-full rounded-lg">
+              <thead>
+              <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b border-gray-700 bg-gray-50">
+                <th class="px-4 py-3">Notification</th>
+                <th class="px-4 py-3">Notification Message</th>
+                <!-- Add more columns as needed -->
+              </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-300">
+              <tr *ngFor="let notification of MyNotifications " class="text-gray-900">
+                <td class="px-4 py-3 text-center">{{ notification.notificationTitle }}</td>
+                <td class="px-4 py-3 font-semibold">{{ notification.message }}</td>
+                <!-- Add more cells as needed -->
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

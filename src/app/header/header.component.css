@@ -9,6 +9,10 @@ header {
   z-index: 50;
   background-color: white;
 }
+.notifications-container {
+  max-height: 300px; /* Adjust as needed */
+  overflow-y: auto;
+}
 
 .showonSmall {
   display: none;

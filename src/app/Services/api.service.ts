@@ -104,5 +104,14 @@ export class ApiService {
     return this.http.put<any>(`${this.baseUrl}/Bills/payBill/${billId}/${decodedToken.accountNumber}`,bill);
   }
 
+  getNotifications(): Observable<any> {
+    const token = this.jwt.getToken()
+    let decodedToken: any;
+    if (token) {
+      decodedToken = jwt_decode(token);
+    }
+    return this.http.get<any>(`${this.baseUrl}/Notification/getNotificationByAccountNumber/${decodedToken.accountNumber}`);
+  }
+
 
 }
